@@ -1,5 +1,5 @@
 import runpod
-import subprocess
+import subprocess as sp
 import requests
 import time
 
@@ -24,6 +24,10 @@ def handler(event):
     '''
     print('got event')
     print(event)
+
+    # Download model
+    cmd = ['wget', '-O', 'model.safetensors', event['input']['model_url']]
+    sp.run(cmd)
 
     response = requests.post(url=f'http://127.0.0.1:3000/sdapi/v1/txt2img', json=event["input"])
 
